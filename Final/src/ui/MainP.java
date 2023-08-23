@@ -118,7 +118,7 @@ public class MainP
             System.out.println ("[2]...Εισαγωγή Μαθήματος");
             System.out.println ("[3]...Διόρθωση Μαθήματος");
             System.out.println ("[4]...Διαγραφή Μαθήματος");
-            System.out.println ("[9]...Έ ξο δ ο ς");
+            System.out.println ("[9]...Έ ξ ο δ ο ς");
             System.out.println ("\nΕπιλογή : ");
             cch = Keyb.nextInt ();
             switch (cch)

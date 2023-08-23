@@ -41,7 +41,7 @@ public class MainP
             System.out.println ("[1]...Πίνακας Καθηγητών");
             System.out.println ("[2]...Πίνακας Φοιτητών");
             System.out.println ("[3]...Πίνακας Μαθημάτων");
-            System.out.println ("[9]...Έ ξο δ ο ς");
+            System.out.println ("[9]...Έ ξ ο δ ο ς");
             System.out.println ("\nΕπιλογή : ");
             ch = Keyb.nextInt ();
             switch (ch)

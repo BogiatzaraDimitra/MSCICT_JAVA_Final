@@ -66,7 +66,7 @@ public class MainP
                 System.out.println ("[2]...Εισαγωγή Καθηγητή");
                 System.out.println ("[3]...Διόρθωση Καθηγητή");
                 System.out.println ("[4]...Διαγραφή Καθηγητή");
-                System.out.println ("[9]...Έ ξο δ ο ς");
+                System.out.println ("[9]...Έ ξ ο δ ο ς");
                 System.out.println ("\nΕπιλογή : ");
                 pch = Keyb.nextInt ();
                 switch (pch)
@@ -92,7 +92,7 @@ public class MainP
             System.out.println ("[2]...Εισαγωγή Φοιτητή");
             System.out.println ("[3]...Διόρθωση Φοιτητή");
             System.out.println ("[4]...Διαγραφή Φοιτητή");
-            System.out.println ("[9]...Έ ξο δ ο ς");
+            System.out.println ("[9]...Έ ξ ο δ ο ς");
             System.out.println ("\nΕπιλογή : ");
             sch = Keyb.nextInt ();
             switch (sch)

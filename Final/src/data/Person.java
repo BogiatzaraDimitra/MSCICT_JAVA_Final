@@ -1,27 +1,53 @@
 package data;
 
-public class Person
-{
-    protected String AM;
-    protected String FullName;
+public class Person {
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    protected String FirstName;
+    protected String LastName;
     protected String Email;
     protected String Phone;
-    private static int Counter = 0;
 
-    public Person(String FullName, String Email, String Phone)
-    {
-        this.FullName = FullName;
-        this.Email = Email;
-        this.Phone = Phone;
-        Counter++;
+    public Person(String firstName, String lastName, String email, String phone) {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Phone = phone;
     }
-    public String getAM () {return AM;}
-    public void setAM (String AM) {this.AM = AM;}
-    public String getFullName () {return FullName;}
-    public void setFullName (String FullName) {this.FullName = FullName;}
-    public String getEmail () {return Email;}
-    public void setEmail (String Email) {this.Email = Email;}
-    public String getPhone() {return Phone;}
-    public void setPhone (String Phone) {this.Phone = Phone;}
+    public Person(){
+
+    }
 
 }
+
+

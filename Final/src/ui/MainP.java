@@ -1,18 +1,12 @@
 //Imports the local packages
 package ui;
+
 import data.Course;
 import data.Professor;
 import data.Student;
 
-//Imports Utilities
+import java.sql.*;
 import java.util.Scanner;
-
-//Imports Libraries for the Database
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class MainP {
     Professor[] Profs;

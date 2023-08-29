@@ -105,8 +105,7 @@ public class MainP {
             while (pch != 9);
         }
 
-    public void Menu3 ()
-    {
+    public void Menu3 () throws SQLException {
 
         int sch=0;
         do
@@ -121,18 +120,8 @@ public class MainP {
             System.out.println("\nΕπιλογή : ");
             sch = Keyb.nextInt();
             switch (sch) {
-                case 1 -> {
-                    ;
-                }
-                case 2 -> {
-                    ;
-                }
-                case 3 -> {
-                    ;
-                }
-                case 4 -> {
-                    ;
-                }
+                case 1 ->  ShowStudents ();
+
             }
         }
         while (sch != 9);
@@ -202,6 +191,31 @@ public class MainP {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+        Pause();
+    }
+
+    public void ShowStudents () throws SQLException {
+        System.out.println("*** ΛΙΣΤΑ ΦΟΙΤΗΤΩΝ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Student";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String am = resultSet.getString("AM");
+                String firstname = resultSet.getString("FirstName");
+                String lastname= resultSet.getString("LastName");
+                String phone = resultSet.getString("Phone");
+                String email = resultSet.getString("Email");
+                int sem = resultSet.getInt("Semester");
+                System.out.println(" AM: " + am + ", FirstName: " + firstname + ", LastName: " + lastname + ", Phone: " + phone + ", Email: " + email + " Semester: " + sem);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Pause();
     }
 

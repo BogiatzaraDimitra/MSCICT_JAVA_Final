@@ -138,13 +138,11 @@ public class MainP {
         while (sch != 9);
     }
 
-    public void Menu4 ()
-    {
+    public void Menu4 () throws SQLException {
 
         int cch=0;
         do
         {
-        if (cch!=9) {
             System.out.println("Μαθήματα");
             System.out.println("==========\n");
             System.out.println("[1]...Προβολή Μαθημάτων");
@@ -157,7 +155,6 @@ public class MainP {
             switch (cch) {
                 case 1 -> ShowCourse();
             }
-        }
         }
         while (cch != 9);
     }
@@ -186,13 +183,25 @@ public class MainP {
         Pause();
     }
 
-        public void ShowCourse ()
-    {
-        int i;
-        System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ***");
-        for (i = 0; i < 10; i++)
-            if (AllCourses[i] != null)
-                System.out.printf("%2d   %-20s  %-20s  %s\n", i + 1, AllCourses[i].getName(), AllCourses[i].getID(), AllCourses[i].getSemester());
+        public void ShowCourse () throws SQLException {
+            System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ***");
+            Connection connection = null;
+            ResultSet resultSet = null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+                String retrieveQuery = "SELECT * FROM Course";
+                PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String id = resultSet.getString("ID");
+                    String name= resultSet.getString("Name");
+                    int sem = resultSet.getInt("Semester");
+                    System.out.println(" ID: " + id + ", Name: " + name + " Semester: " + sem);
+                }
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         Pause();
     }
 

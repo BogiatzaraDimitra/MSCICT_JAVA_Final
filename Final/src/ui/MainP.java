@@ -1,8 +1,8 @@
 //Imports the local packages
 package ui;
-import data.Course;
-import data.Professor;
-import data.Student;
+import data.*;
+//import data.Professor;
+//import data.Student;
 
 //Imports Utilities
 import java.util.Scanner;
@@ -121,7 +121,7 @@ public class MainP {
             sch = Keyb.nextInt();
             switch (sch) {
                 case 1 ->  ShowStudents ();
-
+                case 2 -> InsertStudent ();
             }
         }
         while (sch != 9);
@@ -213,6 +213,52 @@ public class MainP {
                 int sem = resultSet.getInt("Semester");
                 System.out.println(" AM: " + am + ", FirstName: " + firstname + ", LastName: " + lastname + ", Phone: " + phone + ", Email: " + email + " Semester: " + sem);
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Pause();
+    }
+
+    public void InsertStudent () throws SQLException {
+        System.out.println("*** ΕΙΣΑΓΩΓΗ ΦΟΙΤΗΤΗ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String am, FName,LName,phone,email;
+
+        int sem;
+        Keyb.nextLine();
+        System.out.println("AM: ");
+        am = Keyb.nextLine();
+        System.out.println("First Name: ");
+        FName = Keyb.nextLine();
+        System.out.println("Last Name: ");
+        LName = Keyb.nextLine();
+        System.out.println("Phone: ");
+        phone = Keyb.nextLine();
+        System.out.println("EMail: ");
+        email = Keyb.nextLine();
+        System.out.println("Semester: ");
+        sem = Keyb.nextInt();
+
+        Student NewStudent = new Student(FName, LName, email, phone, am, sem);
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "INSERT INTO Student (AM,FirstName,LastName,Phone,Email,Semester) VALUES (?,?,?,?,?,?)";
+            //String retrieveQuery = "SELECT * FROM Student";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            //resultSet = preparedStatement.executeQuery();
+
+                preparedStatement.setString(1, NewStudent.getAM());
+                preparedStatement.setString(2, NewStudent.getFirstName());
+                preparedStatement.setString(3, NewStudent.getLastName());
+                preparedStatement.setString(4, NewStudent.getPhone());
+                preparedStatement.setString(5, NewStudent.getEmail());
+                preparedStatement.setInt(6, NewStudent.getSemester());
+
+                preparedStatement.executeUpdate();
+                System.out.println("Data inserted successfully.");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

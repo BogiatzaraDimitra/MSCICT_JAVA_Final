@@ -1,18 +1,12 @@
 //Imports the local packages
 package ui;
+
 import data.Course;
 import data.Professor;
 import data.Student;
 
-//Imports Utilities
+import java.sql.*;
 import java.util.Scanner;
-
-//Imports Libraries for the Database
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class MainP {
     Professor[] Profs;
@@ -105,8 +99,7 @@ public class MainP {
             while (pch != 9);
         }
 
-    public void Menu3 ()
-    {
+    public void Menu3 () throws SQLException {
 
         int sch=0;
         do
@@ -121,30 +114,18 @@ public class MainP {
             System.out.println("\nΕπιλογή : ");
             sch = Keyb.nextInt();
             switch (sch) {
-                case 1 -> {
-                    ;
-                }
-                case 2 -> {
-                    ;
-                }
-                case 3 -> {
-                    ;
-                }
-                case 4 -> {
-                    ;
-                }
+                case 1 ->  ShowStudents ();
+
             }
         }
         while (sch != 9);
     }
 
-    public void Menu4 ()
-    {
+    public void Menu4 () throws SQLException {
 
         int cch=0;
         do
         {
-        if (cch!=9) {
             System.out.println("Μαθήματα");
             System.out.println("==========\n");
             System.out.println("[1]...Προβολή Μαθημάτων");
@@ -157,7 +138,6 @@ public class MainP {
             switch (cch) {
                 case 1 -> ShowCourse();
             }
-        }
         }
         while (cch != 9);
     }
@@ -186,13 +166,50 @@ public class MainP {
         Pause();
     }
 
-        public void ShowCourse ()
-    {
-        int i;
-        System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ***");
-        for (i = 0; i < 10; i++)
-            if (AllCourses[i] != null)
-                System.out.printf("%2d   %-20s  %-20s  %s\n", i + 1, AllCourses[i].getName(), AllCourses[i].getID(), AllCourses[i].getSemester());
+        public void ShowCourse () throws SQLException {
+            System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ***");
+            Connection connection = null;
+            ResultSet resultSet = null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+                String retrieveQuery = "SELECT * FROM Course";
+                PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String id = resultSet.getString("ID");
+                    String name= resultSet.getString("Name");
+                    int sem = resultSet.getInt("Semester");
+                    System.out.println(" ID: " + id + ", Name: " + name + " Semester: " + sem);
+                }
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        Pause();
+    }
+
+    public void ShowStudents () throws SQLException {
+        System.out.println("*** ΛΙΣΤΑ ΦΟΙΤΗΤΩΝ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Student";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String am = resultSet.getString("AM");
+                String firstname = resultSet.getString("FirstName");
+                String lastname= resultSet.getString("LastName");
+                String phone = resultSet.getString("Phone");
+                String email = resultSet.getString("Email");
+                int sem = resultSet.getInt("Semester");
+                System.out.println(" AM: " + am + ", FirstName: " + firstname + ", LastName: " + lastname + ", Phone: " + phone + ", Email: " + email + " Semester: " + sem);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Pause();
     }
 

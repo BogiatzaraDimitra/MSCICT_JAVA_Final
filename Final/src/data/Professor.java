@@ -5,7 +5,7 @@ public class Professor extends Person
     public Professor(String firstName, String lastName, String email, String phone, String PID, Course teaches) {
         super(firstName, lastName, email, phone);
         this.PID = PID;
-        Teaches = teaches;
+        this.Teaches = teaches;
     }
 
     public String getPID() {
@@ -16,7 +16,7 @@ public class Professor extends Person
         this.PID = PID;
     }
 
-    public Course getTeaches() {
+   public Course getTeaches() {
         return Teaches;
     }
 

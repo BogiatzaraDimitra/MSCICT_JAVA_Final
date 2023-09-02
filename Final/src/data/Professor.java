@@ -1,7 +1,13 @@
 package data;
 
+import java.sql.*;
+import java.util.Scanner;
+
 public class Professor extends Person
 {
+
+    Scanner Keybo = new Scanner(System.in);
+
     public Professor(String firstName, String lastName, String email, String phone, String PID, Course teaches) {
         super(firstName, lastName, email, phone);
         this.PID = PID;

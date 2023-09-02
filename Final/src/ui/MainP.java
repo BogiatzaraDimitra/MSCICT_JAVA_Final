@@ -113,9 +113,10 @@ public class MainP {
             System.out.println("\nΕπιλογή : ");
             sch = Keyb.nextInt();
             switch (sch) {
-                case 1 ->  ShowStudents ();
-                case 2 -> InsertStudent ();
-                case 4 -> DeleteStudent ();
+                case 1 ->  Student.ShowStudents();
+                case 2 -> Student.InsertStudent();
+                case 3 -> Student.EditStudents();
+                case 4 -> Student.DeleteStudent();
             }
         }
         while (sch != 9);
@@ -146,8 +147,8 @@ public class MainP {
 
     public void ShowProf () throws SQLException {
         System.out.println("*** ΛΙΣΤΑ ΚΑΘΗΓΗΤΩΝ ***");
-        Connection connection = null;
-        ResultSet resultSet = null;
+        Connection connection;
+        ResultSet resultSet;
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
@@ -190,30 +191,7 @@ public class MainP {
         Pause();
     }
 
-    public void ShowStudents () throws SQLException {
-        System.out.println("*** ΛΙΣΤΑ ΦΟΙΤΗΤΩΝ ***");
-        Connection connection = null;
-        ResultSet resultSet = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String retrieveQuery = "SELECT * FROM Student";
-            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String am = resultSet.getString("AM");
-                String firstname = resultSet.getString("FirstName");
-                String lastname= resultSet.getString("LastName");
-                String phone = resultSet.getString("Phone");
-                String email = resultSet.getString("Email");
-                int sem = resultSet.getInt("Semester");
-                System.out.println(" AM: " + am + ", FirstName: " + firstname + ", LastName: " + lastname + ", Phone: " + phone + ", Email: " + email + " Semester: " + sem);
-            }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Pause();
-    }
+
 
     public void InsertProf () throws SQLException {
         System.out.println("*** ΕΙΣΑΓΩΓΗ ΚΑΘΗΓΗΤΗ ***");
@@ -233,8 +211,6 @@ public class MainP {
         phone = Keyb.nextLine();
         System.out.println("Email: ");
         email = Keyb.nextLine();
-        System.out.println("Teach: ");
-
 
 
         Professor NewProfessor = new Professor (PID, FName, LName, email, phone, teaches = null);
@@ -261,51 +237,7 @@ public class MainP {
         Pause();
     }
 
-    public void InsertStudent () throws SQLException {
-        System.out.println("*** ΕΙΣΑΓΩΓΗ ΦΟΙΤΗΤΗ ***");
-        Connection connection = null;
-        ResultSet resultSet = null;
-        String am, FName,LName,phone,email;
 
-        int sem;
-        Keyb.nextLine();
-        System.out.println("AM: ");
-        am = Keyb.nextLine();
-        System.out.println("First Name: ");
-        FName = Keyb.nextLine();
-        System.out.println("Last Name: ");
-        LName = Keyb.nextLine();
-        System.out.println("Phone: ");
-        phone = Keyb.nextLine();
-        System.out.println("Email: ");
-        email = Keyb.nextLine();
-        System.out.println("Semester: ");
-        sem = Keyb.nextInt();
-
-        Student NewStudent = new Student(FName, LName, email, phone, am, sem);
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "INSERT INTO Student (AM,FirstName,LastName,Phone,Email,Semester) VALUES (?,?,?,?,?,?)";
-            //String retrieveQuery = "SELECT * FROM Student";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            //resultSet = preparedStatement.executeQuery();
-
-                preparedStatement.setString(1, NewStudent.getAM());
-                preparedStatement.setString(2, NewStudent.getFirstName());
-                preparedStatement.setString(3, NewStudent.getLastName());
-                preparedStatement.setString(4, NewStudent.getPhone());
-                preparedStatement.setString(5, NewStudent.getEmail());
-                preparedStatement.setInt(6, NewStudent.getSemester());
-
-                preparedStatement.executeUpdate();
-                System.out.println("Data inserted successfully.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Pause();
-    }
 
     public void InsertCourse () throws SQLException {
         System.out.println("*** ΕΙΣΑΓΩΓΗ ΜΑΘΗΜΑΤΟΣ ***");
@@ -397,30 +329,6 @@ public class MainP {
         Pause();
     }
 
-    public void DeleteStudent () throws SQLException {
-        System.out.println("*** ΔΙΑΓΡΑΦΗ ΦΟΙΤΗΤΗ ***");
-        Connection connection = null;
-        ResultSet resultSet = null;
-        String am;
-        Keyb.nextLine();
-        System.out.println("AM: ");
-        am = Keyb.nextLine();
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "DELETE FROM Student WHERE AM = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-
-            preparedStatement.setString(1, am);
-
-            preparedStatement.executeUpdate();
-            System.out.println("Data deleted successfully.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Pause();
-    }
 
     public void Pause ()
     {

@@ -1,8 +1,6 @@
 //Imports the local packages
 package ui;
 import data.*;
-//import data.Professor;
-//import data.Student;
 
 //Imports Utilities
 import java.util.Scanner;
@@ -30,6 +28,7 @@ public class MainP {
         Keyb = new Scanner(System.in);
     }
 
+    //Main Method used in program
     public static void main(String[] args) throws SQLException {
         //Settings for connection to the Database
        Connection connection = null;
@@ -80,13 +79,14 @@ public class MainP {
             switch (ch) {
                 case 1 -> Menu2();
                 case 2 -> Menu3();
-                case 3 -> Menu4();
+                case 4 -> Menu4();
             }
         } while (ch != 9);
     }
 
     public void Menu2 () throws SQLException {
             int pch=0;
+
             do
             {
             System.out.println("Καθηγητές");
@@ -101,6 +101,7 @@ public class MainP {
             switch (pch) {
                 case 1 -> ShowProf();
                 case 2 -> InsertProf ();
+                case 4 -> DeleteProfessor ();
             }
             }
             while (pch != 9);
@@ -123,6 +124,7 @@ public class MainP {
             switch (sch) {
                 case 1 ->  ShowStudents ();
                 case 2 -> InsertStudent ();
+                case 4 -> DeleteStudent ();
             }
         }
         while (sch != 9);
@@ -145,6 +147,7 @@ public class MainP {
             switch (cch) {
                 case 1 -> ShowCourse();
                 case 2 -> InsertCourse ();
+                case 3 -> DeleteCourse ();
             }
         }
         while (cch != 9);
@@ -349,11 +352,89 @@ public class MainP {
         Pause();
     }
 
+    public void DeleteCourse () throws SQLException {
+        System.out.println("*** ΔΙΑΓΡΑΦΗ ΜΑΘΗΜΑΤΟΣ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String id;
+        Keyb.nextLine();
+        System.out.println("ID: ");
+        id = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "DELETE FROM Course WHERE id = ?";
+            //String retrieveQuery = "SELECT * FROM Student";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            //resultSet = preparedStatement.executeQuery();
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data deleted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Pause();
+    }
+
+    public void DeleteProfessor () throws SQLException {
+        System.out.println("*** ΔΙΑΓΡΑΦΗ ΚΑΘΗΓΗΤΗ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String id;
+        Keyb.nextLine();
+        System.out.println("ID: ");
+        id = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "DELETE FROM Professor WHERE PID = ?";
+            //String retrieveQuery = "SELECT * FROM Student";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            //resultSet = preparedStatement.executeQuery();
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data deleted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Pause();
+    }
+
+    public void DeleteStudent () throws SQLException {
+        System.out.println("*** ΔΙΑΓΡΑΦΗ ΦΟΙΤΗΤΗ ***");
+        Connection connection = null;
+        ResultSet resultSet = null;
+        String am;
+        Keyb.nextLine();
+        System.out.println("AM: ");
+        am = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "DELETE FROM Student WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, am);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data deleted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Pause();
+    }
+
     public void Pause ()
     {
         Scanner K = new Scanner (System.in);
         System.out.print ("Πιέστε <Enter> για συνέχεια...");
         K.nextLine ();
     }
-
 }

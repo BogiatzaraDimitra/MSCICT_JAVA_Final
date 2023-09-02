@@ -13,18 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MainP {
-    Professor[] Profs;
-    Student[] Studs;
-    Course[] AllCourses;
     Scanner Keyb;
 
     public MainP() {
-        Profs = new Professor[20];
-        //SomeProfs ();
-        Studs = new Student[20];
-        //SomeStuds ();
-        AllCourses = new Course[20];
-        //SomeCourse ();
         Keyb = new Scanner(System.in);
     }
 

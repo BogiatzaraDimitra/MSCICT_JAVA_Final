@@ -92,7 +92,7 @@ public class MainP {
             switch (pch) {
                 case 1 -> ShowProf();
                 case 2 -> InsertProf ();
-                case 4 -> DeleteProfessor ();
+                case 4 -> Professor.DeleteProfessor();
             }
             }
             while (pch != 9);
@@ -301,34 +301,6 @@ public class MainP {
         }
         Pause();
     }
-
-    public void DeleteProfessor () throws SQLException {
-        System.out.println("*** ΔΙΑΓΡΑΦΗ ΚΑΘΗΓΗΤΗ ***");
-        Connection connection = null;
-        ResultSet resultSet = null;
-        String id;
-        Keyb.nextLine();
-        System.out.println("ID: ");
-        id = Keyb.nextLine();
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "DELETE FROM Professor WHERE PID = ?";
-            //String retrieveQuery = "SELECT * FROM Student";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            //resultSet = preparedStatement.executeQuery();
-
-            preparedStatement.setString(1, id);
-
-            preparedStatement.executeUpdate();
-            System.out.println("Data deleted successfully.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Pause();
-    }
-
 
     public void Pause ()
     {

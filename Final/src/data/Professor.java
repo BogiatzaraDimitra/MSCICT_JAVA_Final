@@ -32,4 +32,29 @@ public class Professor extends Person
 
     private String PID; // Κωδικός Καθηγητή
     private Course Teaches; //Μάθημα
+
+    public static void DeleteProfessor () throws SQLException {
+        Scanner Keyb= new Scanner(System.in);
+        System.out.println("*** ΔΙΑΓΡΑΦΗ ΚΑΘΗΓΗΤΗ ***");
+        Connection connection;
+        String id;
+        Keyb.nextLine();
+        System.out.println("ID: ");
+        id = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "DELETE FROM Professor WHERE PID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data deleted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

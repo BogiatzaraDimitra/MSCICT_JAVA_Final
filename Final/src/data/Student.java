@@ -46,69 +46,7 @@ public class Student extends Person
         Semester = semester;
     }
     public Student(){}
-    public static void InsertStudent () throws SQLException {
-        Scanner Keyb= new Scanner(System.in);
-        System.out.println("*** ΕΙΣΑΓΩΓΗ ΦΟΙΤΗΤΗ ***");
-        Connection connection;
-        //ResultSet resultSet = null;
-        Student newStudent= new Student();
-        System.out.println("AM: ");
-        newStudent.setAM(Keyb.nextLine());
-        System.out.println("First Name: ");
-        newStudent.setFirstName(Keyb.nextLine());
-        System.out.println("Last Name: ");
-        newStudent.setLastName(Keyb.nextLine());
-        System.out.println("Phone: ");
-        newStudent.setPhone(Keyb.nextLine());
-        System.out.println("Email: ");
-        newStudent.setEmail(Keyb.nextLine());
-        System.out.println("Semester: ");
-        newStudent.setSemester(Keyb.nextInt());
 
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "INSERT INTO Student (AM,FirstName,LastName,Phone,Email,Semester) VALUES (?,?,?,?,?,?)";
-            //String retrieveQuery = "SELECT * FROM Student";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            //resultSet = preparedStatement.executeQuery();
-
-            preparedStatement.setString(1, newStudent.getAM());
-            preparedStatement.setString(2, newStudent.getFirstName());
-            preparedStatement.setString(3, newStudent.getLastName());
-            preparedStatement.setString(4, newStudent.getPhone());
-            preparedStatement.setString(5, newStudent.getEmail());
-            preparedStatement.setInt(6, newStudent.getSemester());
-
-            preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static void DeleteStudent () throws SQLException {
-        Scanner Keyb= new Scanner(System.in);
-        System.out.println("*** ΔΙΑΓΡΑΦΗ ΦΟΙΤΗΤΗ ***");
-        Connection connection;
-        String am;
-        Keyb.nextLine();
-        System.out.println("AM: ");
-        am = Keyb.nextLine();
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "DELETE FROM Student WHERE AM = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-
-            preparedStatement.setString(1, am);
-
-            preparedStatement.executeUpdate();
-            System.out.println("Data deleted successfully.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public static void ShowStudents () throws SQLException {
         System.out.println("*** ΛΙΣΤΑ ΦΟΙΤΗΤΩΝ ***");
         Connection connection;
@@ -132,6 +70,45 @@ public class Student extends Person
             throw new RuntimeException(e);
         }
     }
+
+    public static void InsertStudent () throws SQLException {
+        Scanner Keyb= new Scanner(System.in);
+        System.out.println("*** ΕΙΣΑΓΩΓΗ ΦΟΙΤΗΤΗ ***");
+        Connection connection;
+        Student newStudent= new Student();
+        System.out.println("AM: ");
+        newStudent.setAM(Keyb.nextLine());
+        System.out.println("First Name: ");
+        newStudent.setFirstName(Keyb.nextLine());
+        System.out.println("Last Name: ");
+        newStudent.setLastName(Keyb.nextLine());
+        System.out.println("Phone: ");
+        newStudent.setPhone(Keyb.nextLine());
+        System.out.println("Email: ");
+        newStudent.setEmail(Keyb.nextLine());
+        System.out.println("Semester: ");
+        newStudent.setSemester(Keyb.nextInt());
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "INSERT INTO Student (AM,FirstName,LastName,Phone,Email,Semester) VALUES (?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, newStudent.getAM());
+            preparedStatement.setString(2, newStudent.getFirstName());
+            preparedStatement.setString(3, newStudent.getLastName());
+            preparedStatement.setString(4, newStudent.getPhone());
+            preparedStatement.setString(5, newStudent.getEmail());
+            preparedStatement.setInt(6, newStudent.getSemester());
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data inserted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void EditStudents () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         String setColumn="";
@@ -195,6 +172,9 @@ public class Student extends Person
                             updateField = Keyb.nextLine();
 
                         }
+                        case 9 -> {
+                            return;
+                        }
                     }
                     updateStudent(setColumn,updateField,am);
                 }
@@ -223,6 +203,30 @@ public class Student extends Person
             System.out.println(rowsAffected + " εγγραφή ενημερώθηκε επιτυχώς.");
         } else {
             System.out.println("Ανεπιτυχής διόρθωση");
+        }
+    }
+
+    public static void DeleteStudent () throws SQLException {
+        Scanner Keyb= new Scanner(System.in);
+        System.out.println("*** ΔΙΑΓΡΑΦΗ ΦΟΙΤΗΤΗ ***");
+        Connection connection;
+        String am;
+        Keyb.nextLine();
+        System.out.println("AM: ");
+        am = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "DELETE FROM Student WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, am);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data deleted successfully.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 //Imports Libraries for the Database
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -24,33 +22,7 @@ public class MainP {
         //Settings for connection to the Database
        Connection connection = null;
        ResultSet resultSet = null;
-        //TestCode
-        /*try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            PreparedStatement preparedStatement = null;
-            // Insert data
-            String insertQuery = "INSERT INTO Course (ID,Name) VALUES (?,?)";
-            preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setString(1, "2");
-            preparedStatement.setString(2, "Programming");
 
-            preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully.");
-
-            // Retrieve data
-            String retrieveQuery = "SELECT ID, Name FROM Course";
-            preparedStatement = connection.prepareStatement(retrieveQuery);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("ID");
-                String name = resultSet.getString("Name");
-                System.out.println("ID: " + id + ", Name: " + name);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-*/
         MainP Pr = new MainP();
         Pr.Menu1();
     }

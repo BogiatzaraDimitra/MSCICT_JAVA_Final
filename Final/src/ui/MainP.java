@@ -5,23 +5,19 @@ import data.*;
 //Imports Utilities
 import java.util.Scanner;
 
-//Imports Libraries for the Database
-import java.sql.Connection;
-import java.sql.ResultSet;
+//Imports Libraries for the SQLDatabase
 import java.sql.SQLException;
 
+//Main Class that Starts the program
 public class MainP {
-    Scanner Keyb;
+    Scanner Keyb; //Scanner Class for User Input
 
     public MainP() {
-        Keyb = new Scanner(System.in);
+        Keyb = new Scanner(System.in); //New Scanner Object
     }
 
     //Main Method used in program
     public static void main(String[] args) throws SQLException {
-        //Settings for connection to the Database
-       Connection connection = null;
-       ResultSet resultSet = null;
 
         MainP Pr = new MainP();
         Pr.Menu1();
@@ -58,6 +54,8 @@ public class MainP {
             System.out.println("[2]...Εισαγωγή Καθηγητή");
             System.out.println("[3]...Διόρθωση Καθηγητή");
             System.out.println("[4]...Διαγραφή Καθηγητή");
+            System.out.println("[5]...Ανάθεση Μαθήματος σε Καθηγητή");
+            System.out.println("[6]...Προβολή Μαθημάτων Καθηγητή");
             System.out.println("[9]...Έ ξ ο δ ο ς");
             System.out.println("\nΕπιλογή : ");
             pch = Keyb.nextInt();
@@ -66,8 +64,14 @@ public class MainP {
                             Pause();}
                 case 2 -> {Professor.InsertProf ();
                             Pause();}
+                case 3 -> {Professor.EditProfessor();
+                            Pause();}
                 case 4 -> {Professor.DeleteProfessor();
                             Pause();}
+                case 5 -> {Professor.Teaches();
+                    Pause();}
+                case 6 -> {Professor.ShowProfCourse();
+                Pause();}
             }
             }
             while (pch != 9);
@@ -128,9 +132,6 @@ public class MainP {
         }
         while (cch != 9);
     }
-
-
-
 
     public void Pause ()
     {

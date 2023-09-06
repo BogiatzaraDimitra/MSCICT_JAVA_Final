@@ -307,7 +307,7 @@ public class Student extends Person
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String retrieveQuery = "SELECT ID AND Grade FROM StudentCourse WHERE AM = ?";
+            String retrieveQuery = "SELECT * FROM StudentCourse WHERE AM = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
             preparedStatement.setString(1, am);
             resultSet = preparedStatement.executeQuery();
@@ -319,8 +319,9 @@ public class Student extends Person
                 preparedStatement1.setString(1, resultSet.getString("ID"));
                 resultSet1 = preparedStatement1.executeQuery();
                 id = resultSet1.getString("Name");
-                System.out.printf("Course: " + id);
-                System.out.printf("Course: " + grad);
+                System.out.printf("Course: " + id + "   ");
+                System.out.printf("Grade: " + grad);
+                System.out.println("");
             }
 
         } catch (ClassNotFoundException e) {
@@ -399,4 +400,32 @@ public class Student extends Person
         }
 }
 
+    public static void CalcAvg () throws SQLException {
+        Scanner Keyb = new Scanner(System.in);
+        System.out.println("*** ΜΕΣΟΣ ΟΡΟΣ ΦΟΙΤΗΤΗ ***");
+        Connection connection;
+        ResultSet resultSet ;
+
+        float avg = 0;
+        int grad, i = 0;
+        System.out.println("Ειράγετε ΑΜ του φοιτητή για εξαγωγή μέσου όρου");
+        String am = Keyb.nextLine();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT Grade FROM StudentCourse WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, am);
+            resultSet = preparedStatement.executeQuery();
+            //preparedStatement.setString(1, am);
+            while (resultSet.next()) {
+                grad = resultSet.getInt("Grade");
+                avg = avg + grad;
+                i++;
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(" Average for Student with AM " + am + " is " + avg / i);
+    }
 }

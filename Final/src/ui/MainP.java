@@ -91,6 +91,7 @@ public class MainP {
             System.out.println("[5]...Εγγραφή Φοιτητή σε μάθημα");
             System.out.println("[6]...Προβολή μαθημάτων φοιτητή");
             System.out.println("[7]...Εισαγωγή Βαθμολογίας σε φοιτητή");
+            System.out.println("[8]...Εμφάνιση Μέσου όρου φοιτητή");
             System.out.println("[9]...Έ ξ ο δ ο ς");
             System.out.println("\nΕπιλογή : ");
             sch = Keyb.nextInt();
@@ -108,6 +109,8 @@ public class MainP {
                 case 6 -> {Student.ShowStudentCourse();
                             Pause();}
                 case 7 -> {Student.GradeToStudent();
+                            Pause();}
+                case 8 -> {Student.CalcAvg ();
                             Pause();}
             }
         }

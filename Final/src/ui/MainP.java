@@ -88,6 +88,7 @@ public class MainP {
             System.out.println("[2]...Εισαγωγή Φοιτητή");
             System.out.println("[3]...Διόρθωση Φοιτητή");
             System.out.println("[4]...Διαγραφή Φοιτητή");
+            System.out.println("[5]...Εγγραφή Φοιτητή σε μάθημα");
             System.out.println("[9]...Έ ξ ο δ ο ς");
             System.out.println("\nΕπιλογή : ");
             sch = Keyb.nextInt();
@@ -99,6 +100,8 @@ public class MainP {
                 case 3 -> {Student.EditStudents();
                             Pause();}
                 case 4 -> {Student.DeleteStudent();
+                            Pause();}
+                case 5 -> {Student.Studies();
                             Pause();}
             }
         }

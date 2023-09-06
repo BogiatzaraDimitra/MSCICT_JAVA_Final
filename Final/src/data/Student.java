@@ -230,4 +230,65 @@ public class Student extends Person
         }
     }
 
+    public static void Studies() throws SQLException {
+        Scanner Keyb = new Scanner(System.in);
+        System.out.println("*** ΑΝΑΘΕΣΗ ΜΑΘΗΜΑΤΟΣ ΣΕ ΦΟΙΤΗΤΗ ***");
+
+        Connection connection;
+        ResultSet resultSet;
+        String am, id;
+
+        System.out.println("ΑΜ Φοιτητή:");
+        am = Keyb.nextLine();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Student WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, am);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(" AM: " + resultSet.getString("AM") + ", FirstName: " + resultSet.getString("FirstName") + ", LastName: " + resultSet.getString("LastName"));
+                connection.close();
+            }
+            else System.out.println("Δεν βρέθηκε φοιτητής με αυτό το ΑΜ");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("ID μαθήματος:");
+        id = Keyb.nextLine();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Course WHERE ID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(" ID: " + resultSet.getString("ID") + ", Title: " + resultSet.getString("Name"));
+                connection.close();
+            }
+            else System.out.println("Δεν βρέθηκε μάθημα με αυτό το ID");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String insertQuery = "INSERT INTO StudentCourse (AM, ID) VALUES (?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, am);
+            preparedStatement.setString(2, id);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Η εγγραφή έγινε επιτυχώς.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

@@ -1,7 +1,7 @@
 package data;
 
 import java.sql.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Professor extends Person
 {
@@ -259,21 +259,6 @@ public class Professor extends Person
         }
 
         InsertTeaches(ProfessorToCourse.getPID(), ProfessorToCourse.getID());
-
-/*        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "INSERT INTO ProfessorCourse (PID, ID) VALUES (?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-
-            preparedStatement.setString(1, ProfessorToCourse.getPID());
-            preparedStatement.setString(2, ProfessorToCourse.getID());
-
-            preparedStatement.executeUpdate();
-            System.out.println("Η εγγραφή έγινε επιτυχώς.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     public static void InsertTeaches(String pid, String id) throws SQLException {
@@ -299,13 +284,14 @@ public class Professor extends Person
 
     public static void ShowProfCourse() throws SQLException {
         Scanner Keyb = new Scanner(System.in);
+        ArrayList<String> IDs = new ArrayList<String>();
 
         System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ΚΑΘΗΓΗΤΗ ***");
         Connection connection;
-        ResultSet resultSet;
+        ResultSet resultSet, resultSet1;
 
-        System.out.println("ID μαθήματος το οποίο διδάκσει:");
-        String pid;
+        System.out.println("ID καθηγητή:");
+        String pid, id;
         pid = Keyb.nextLine();
 
         try {
@@ -315,6 +301,15 @@ public class Professor extends Person
             PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
             preparedStatement.setString(1, pid);
             resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                String retrieveQuery2 = "SELECT Name FROM Course WHERE ID = ?";
+                PreparedStatement preparedStatement1 = connection.prepareStatement(retrieveQuery2);
+                preparedStatement1.setString(1, resultSet.getString("ID"));
+                resultSet1 = preparedStatement1.executeQuery();
+                id = resultSet1.getString("Name");
+                System.out.println("Course: " + id);
+            }
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

@@ -284,7 +284,6 @@ public class Professor extends Person
 
     public static void ShowProfCourse() throws SQLException {
         Scanner Keyb = new Scanner(System.in);
-        ArrayList<String> IDs = new ArrayList<String>();
 
         System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ΚΑΘΗΓΗΤΗ ***");
         Connection connection;

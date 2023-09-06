@@ -291,4 +291,37 @@ public class Student extends Person
 
     }
 
+    public static void ShowStudentCourse() throws SQLException {
+        Scanner Keyb = new Scanner(System.in);
+
+        System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ΦΟΙΤΗΤΗ ***");
+        Connection connection;
+        ResultSet resultSet, resultSet1;
+
+        System.out.println("ID Φοιτητη:");
+        String am, id;
+        am = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT ID FROM StudentCourse WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, am);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                String retrieveQuery2 = "SELECT Name FROM Course WHERE ID = ?";
+                PreparedStatement preparedStatement1 = connection.prepareStatement(retrieveQuery2);
+                preparedStatement1.setString(1, resultSet.getString("ID"));
+                resultSet1 = preparedStatement1.executeQuery();
+                id = resultSet1.getString("Name");
+                System.out.println("Course: " + id);
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

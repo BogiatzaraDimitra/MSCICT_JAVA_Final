@@ -288,6 +288,7 @@ public class Student extends Person
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        connection.close();
 
     }
 
@@ -300,15 +301,17 @@ public class Student extends Person
 
         System.out.println("ID Φοιτητη:");
         String am, id;
+        int grad;
         am = Keyb.nextLine();
 
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String retrieveQuery = "SELECT ID FROM StudentCourse WHERE AM = ?";
+            String retrieveQuery = "SELECT ID AND Grade FROM StudentCourse WHERE AM = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
             preparedStatement.setString(1, am);
             resultSet = preparedStatement.executeQuery();
+            grad = resultSet.getInt("Grade");
 
             while (resultSet.next()){
                 String retrieveQuery2 = "SELECT Name FROM Course WHERE ID = ?";
@@ -316,12 +319,84 @@ public class Student extends Person
                 preparedStatement1.setString(1, resultSet.getString("ID"));
                 resultSet1 = preparedStatement1.executeQuery();
                 id = resultSet1.getString("Name");
-                System.out.println("Course: " + id);
+                System.out.printf("Course: " + id);
+                System.out.printf("Course: " + grad);
             }
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static void GradeToStudent() throws SQLException {
+        Scanner Keyb = new Scanner(System.in);
+
+        Connection connection;
+        ResultSet resultSet;
+
+        String am, id;
+        int grad;
+
+        System.out.println("*** ΒΑΘΜΟΛΟΓΙΑ ΦΟΙΤΗΤΗ ***");
+        System.out.println("ID Φοιτητη:");
+        am = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Student WHERE AM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, am);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(" AM: " + resultSet.getString("AM") + ", FirstName: " + resultSet.getString("FirstName") + ", LastName: " + resultSet.getString("LastName"));
+                connection.close();
+            }
+            else System.out.println("Δεν βρέθηκε φοιτητής με αυτό το ΑΜ");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("ID Μαθήματος:");
+        id = Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT * FROM Course WHERE ID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(" ID: " + resultSet.getString("ID") + ", Title: " + resultSet.getString("Name"));
+                connection.close();
+            }
+            else System.out.println("Δεν βρέθηκε μάθημα με αυτό το ID");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Βαθμός Φοιτητή για το μάθημα:");
+        grad = Keyb.nextInt();
+        Keyb.nextLine();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String updateQuery = "UPDATE StudentCourse SET Grade = ? WHERE AM = ? AND ID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+
+            preparedStatement.setInt(1, grad);
+            preparedStatement.setString(2, am);
+            preparedStatement.setString(3, id);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Data inserted successfully.");
+
+            connection.close();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+}
 
 }

@@ -185,4 +185,32 @@ public class Course
             throw new RuntimeException(e);
         }
     }
+
+    public static void CalcAvg () throws SQLException {
+        Scanner Keyb = new Scanner(System.in);
+        System.out.println("*** ΜΕΣΟΣ ΟΡΟΣ ΒΑΘΜΟΛΟΓΙΑΣ ΜΑΘΗΜΑΤΟΣ ***");
+        Connection connection;
+        ResultSet resultSet ;
+
+        float avg = 0;
+        int grad, i = 0;
+        System.out.println("Ειράγετε κωδικό μαθήματος");
+        String am = Keyb.nextLine();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
+            String retrieveQuery = "SELECT Grade FROM StudentCourse WHERE ID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(retrieveQuery);
+            preparedStatement.setString(1, am);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                grad = resultSet.getInt("Grade");
+                avg = avg + grad;
+                i++;
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(" Ο μέσος όρος βαθμολογίας για το μάθημα με κωδικό " + am + " is " + avg / i);
+    }
 }

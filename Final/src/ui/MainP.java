@@ -128,6 +128,7 @@ public class MainP {
             System.out.println("[2]...Εισαγωγή Μαθήματος");
             System.out.println("[3]...Διόρθωση Μαθήματος");
             System.out.println("[4]...Διαγραφή Μαθήματος");
+            System.out.println("[5]...Μέσος Όρος Βαθμολογίας");
             System.out.println("[9]...Έ ξ ο δ ο ς");
             System.out.println("\nΕπιλογή : ");
             cch = Keyb.nextInt();
@@ -139,6 +140,8 @@ public class MainP {
                 case 3 -> {Course.EditCourse ();
                             Pause();}
                 case 4 -> {Course.DeleteCourse ();
+                            Pause();}
+                case 5 -> {Course.CalcAvg ();
                             Pause();}
             }
         }

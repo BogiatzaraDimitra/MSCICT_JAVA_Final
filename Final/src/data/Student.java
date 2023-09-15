@@ -323,7 +323,7 @@ public class Student extends Person
                 System.out.printf("Grade: " + grad);
                 System.out.println("");
             }
-
+            connection.close();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -407,7 +407,7 @@ public class Student extends Person
         ResultSet resultSet ;
 
         float avg = 0;
-        int grad, i = 0;
+        float grad, i = 0;
         System.out.println("Ειράγετε ΑΜ του φοιτητή για εξαγωγή μέσου όρου");
         String am = Keyb.nextLine();
         try {
@@ -421,7 +421,7 @@ public class Student extends Person
             while (resultSet.next()) {
                 grad = resultSet.getInt("Grade");
                 avg = avg + grad;
-                i++;
+                i = i+1;
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

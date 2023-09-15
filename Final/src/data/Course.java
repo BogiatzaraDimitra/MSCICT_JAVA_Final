@@ -1,14 +1,12 @@
 package data;
-
 import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Η κλάση Course παριστά ένα μάθημα του προγράμματος σπουδών.
- * Υπάρχουν και οι κατάλληλοι getters που παρέχουν πρόσβαση σε όλες τις κλάσεις.
- *
+ *The Course class represents a course offered by the university.
+ * It contains essential attributes such as a unique course ID, the name of
+ *the course, and the semester in which it is offered.
  */
-
 public class Course
 {
     String ID;
@@ -29,7 +27,10 @@ public class Course
     public int getSemester () {return Semester;}
     public void setSemester (int Semester) {Semester = Semester;}
 
-
+    /**
+     * Method that Shows a course by providing its ID
+     * @throws SQLException
+     */
     public static void ShowCourse () throws SQLException {
         System.out.println("*** ΛΙΣΤΑ ΜΑΘΗΜΑΤΩΝ ***");
         Connection connection;
@@ -51,6 +52,10 @@ public class Course
         }
     }
 
+    /**
+     * Method that allows the user to edit a course by its ID
+     * @throws SQLException
+     */
     public static void EditCourse () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         String setColumn="";
@@ -109,6 +114,14 @@ public class Course
         }
     }
 
+    /**
+     * Method that is used by EditCourse and writes the results into the database
+     * @param setColumn
+     * @param updateField
+     * @param ID
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public static void updateCourse(String setColumn, String updateField, String ID) throws SQLException, ClassNotFoundException {
         Connection connection;
         Class.forName("org.sqlite.JDBC");
@@ -129,6 +142,10 @@ public class Course
         }
     }
 
+    /**
+     * Method that allows the user to add a new course into the database
+     * @throws SQLException
+     */
     public static void InsertCourse () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         System.out.println("*** ΕΙΣΑΓΩΓΗ ΜΑΘΗΜΑΤΟΣ ***");
@@ -162,6 +179,10 @@ public class Course
         }
     }
 
+    /**
+     * Method that allows a user to delete a course from the database by its ID
+     * @throws SQLException
+     */
     public static void DeleteCourse () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         System.out.println("*** ΔΙΑΓΡΑΦΗ ΜΑΘΗΜΑΤΟΣ ***");
@@ -186,6 +207,10 @@ public class Course
         }
     }
 
+    /**
+     * Method that allows a user to calculate the average grade of a Course
+     * @throws SQLException
+     */
     public static void CalcAvg () throws SQLException {
         Scanner Keyb = new Scanner(System.in);
         System.out.println("*** ΜΕΣΟΣ ΟΡΟΣ ΒΑΘΜΟΛΟΓΙΑΣ ΜΑΘΗΜΑΤΟΣ ***");

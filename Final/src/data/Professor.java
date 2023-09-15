@@ -1,22 +1,46 @@
 package data;
-
 import java.sql.*;
 import java.util.*;
 
+/**
+ * The Professor class represents a faculty member in the university database.
+ * It extends the Person class, inheriting basic personal information, and adds
+ * specific attributes related to professors such as a unique PID (Professor ID) and the course they teach.
+ */
 public class Professor extends Person
 {
+    /**
+     *
+     * @param PID
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @param teaches
+     */
     public Professor(String PID, String firstName, String lastName, String email, String phone, Course teaches) {
         super(firstName, lastName, email, phone);
         this.PID = PID;
         this.Teaches = teaches;
     }
 
+    /**
+     * Default Constructor of a Professor Object
+     */
     public Professor(){}
 
+    /**
+     * Getter for PID
+     * @return
+     */
     public String getPID() {
         return PID;
     }
 
+    /**
+     * Setter for PID
+     * @param PID
+     */
     public void setPID(String PID) {
         this.PID = PID;
     }

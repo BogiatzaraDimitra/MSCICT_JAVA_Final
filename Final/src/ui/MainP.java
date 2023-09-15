@@ -1,14 +1,11 @@
-//Imports the local packages
 package ui;
 import data.*;
-
-//Imports Utilities
 import java.util.Scanner;
-
-//Imports Libraries for the SQLDatabase
 import java.sql.SQLException;
 
-//Main Class that Starts the program
+/**
+ * Main Class That starts the program
+ */
 public class MainP {
     Scanner Keyb; //Scanner Class for User Input
 
@@ -16,13 +13,21 @@ public class MainP {
         Keyb = new Scanner(System.in); //New Scanner Object
     }
 
-    //Main Method used in program
+    /**
+     * Main method that starts the program
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
 
         MainP Pr = new MainP();
         Pr.Menu1();
     }
 
+    /**
+     * Displays Main Menu
+     * @throws SQLException
+     */
     public void Menu1 () throws SQLException {
         int ch;
         do {
@@ -43,6 +48,10 @@ public class MainP {
         } while (ch != 9);
     }
 
+    /**
+     * Displays Student Menu for Professors
+     * @throws SQLException
+     */
     public void Menu2 () throws SQLException {
             int pch;
 
@@ -77,6 +86,10 @@ public class MainP {
             while (pch != 9);
         }
 
+    /**
+     * Displays User Menu for Students
+     * @throws SQLException
+     */
     public void Menu3 () throws SQLException {
 
         int sch;
@@ -117,6 +130,10 @@ public class MainP {
         while (sch != 9);
     }
 
+    /**
+     * Displays User Menu for Courses
+     * @throws SQLException
+     */
     public void Menu4 () throws SQLException {
 
         int cch;
@@ -148,6 +165,9 @@ public class MainP {
         while (cch != 9);
     }
 
+    /**
+     * Method that pauses the program and gives time to the user to read the results
+     */
     public void Pause ()
     {
         Scanner K = new Scanner (System.in);

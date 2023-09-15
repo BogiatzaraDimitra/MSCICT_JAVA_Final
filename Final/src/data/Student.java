@@ -1,9 +1,15 @@
 package data;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The Student class represents a student in the university database.
+ * It extends the Person class, inheriting basic personal information, and
+ * includes additional attributes specific to students, such as their unique
+ * AM (Admission Number), current semester, and the list of courses they are
+ * currently studying.
+ */
 public class Student extends Person
 {
     private String AM;
@@ -33,6 +39,16 @@ public class Student extends Person
         Studies = studies;
     }
 
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @param AM
+     * @param semester
+     * @param studies
+     */
     public Student(String firstName, String lastName, String email, String phone, String AM, int semester, ArrayList<Course> studies) {
         super(firstName, lastName, email, phone);
         this.AM = AM;
@@ -47,6 +63,10 @@ public class Student extends Person
     }
     public Student(){}
 
+    /**
+     * Method that displays every Student in the database
+     * @throws SQLException
+     */
     public static void ShowStudents () throws SQLException {
         System.out.println("*** ΛΙΣΤΑ ΦΟΙΤΗΤΩΝ ***");
         Connection connection;
@@ -71,6 +91,10 @@ public class Student extends Person
         }
     }
 
+    /**
+     * Method that allows the user to add a new Student to the databade
+     * @throws SQLException
+     */
     public static void InsertStudent () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         System.out.println("*** ΕΙΣΑΓΩΓΗ ΦΟΙΤΗΤΗ ***");
@@ -109,6 +133,10 @@ public class Student extends Person
         }
     }
 
+    /**
+     * Method that allows the user to edit any attribute of an existing student in the database
+     * @throws SQLException
+     */
     public static void EditStudents () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         String setColumn="";
@@ -186,6 +214,15 @@ public class Student extends Person
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Used by methos EditStudent() and writes any changes into the database
+     * @param setColumn
+     * @param updateField
+     * @param am
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public static void updateStudent(String setColumn, String updateField, String am) throws SQLException, ClassNotFoundException {
         Connection connection;
         Class.forName("org.sqlite.JDBC");
@@ -206,6 +243,10 @@ public class Student extends Person
         }
     }
 
+    /**
+     * Method that lets the user delete a Student by their AM
+     * @throws SQLException
+     */
     public static void DeleteStudent () throws SQLException {
         Scanner Keyb= new Scanner(System.in);
         System.out.println("*** ΔΙΑΓΡΑΦΗ ΦΟΙΤΗΤΗ ***");
@@ -230,6 +271,11 @@ public class Student extends Person
         }
     }
 
+    /**
+     * Method that lets the user enroll a student into a course
+     * by adding the AM of the Student and the ID od the Course
+     * @throws SQLException
+     */
     public static void Studies() throws SQLException {
         Scanner Keyb = new Scanner(System.in);
         System.out.println("*** ΑΝΑΘΕΣΗ ΜΑΘΗΜΑΤΟΣ ΣΕ ΦΟΙΤΗΤΗ ***");
@@ -292,6 +338,10 @@ public class Student extends Person
 
     }
 
+    /**
+     * Method that Shows the courses a student is enrolled at
+     * @throws SQLException
+     */
     public static void ShowStudentCourse() throws SQLException {
         Scanner Keyb = new Scanner(System.in);
 
@@ -329,6 +379,10 @@ public class Student extends Person
         }
     }
 
+    /**
+     * Method that alllows the user to assing a grade to a student
+     * @throws SQLException
+     */
     public static void GradeToStudent() throws SQLException {
         Scanner Keyb = new Scanner(System.in);
 
@@ -400,6 +454,10 @@ public class Student extends Person
         }
 }
 
+    /**
+     * Method that reads the grades assigned to a student and returns the average
+     * @throws SQLException
+     */
     public static void CalcAvg () throws SQLException {
         Scanner Keyb = new Scanner(System.in);
         System.out.println("*** ΜΕΣΟΣ ΟΡΟΣ ΦΟΙΤΗΤΗ ***");

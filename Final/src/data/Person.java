@@ -1,5 +1,8 @@
 package data;
 
+/**
+ * Class that is used as a reference for every living entity of the university's database
+ */
 public class Person {
     public String getFirstName() {
         return FirstName;

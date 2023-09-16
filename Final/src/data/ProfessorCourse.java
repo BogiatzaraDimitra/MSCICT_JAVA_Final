@@ -1,8 +1,7 @@
 package data;
 
 /**
- * Η κλάση ProfessorCourse παριστά τον πίνακα της βάσης δεδομένων που συνδέει έναν κψδικό καθηγητή με τους κωδικούε μαθήμάτων που διδάσκει.
- * Υπάρχουν και οι κατάλληλοι getters που παρέχουν πρόσβαση σε όλες τις κλάσεις.
+ *The class ProfessorCourse represents the database table that connects a professor's code with the course codes they teach.
  */
 
 public class ProfessorCourse {

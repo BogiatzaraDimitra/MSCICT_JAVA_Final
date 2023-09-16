@@ -259,7 +259,8 @@ public class Professor extends Person
                 System.out.println(" ID: " + resultSet.getString("PID") + ", FirstName: " + resultSet.getString("FirstName") + ", LastName: " + resultSet.getString("LastName"));
                 connection.close();
             }
-            else System.out.println("Δεν βρέθηκε καθηγητής με αυτό το ID");
+            else {System.out.println("Δεν βρέθηκε καθηγητής με αυτό το ID");
+            System.exit(0);}
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -277,7 +278,8 @@ public class Professor extends Person
                 System.out.println(" ID: " + resultSet.getString("ID") + ", Title: " + resultSet.getString("Name"));
                 connection.close();
             }
-            else System.out.println("Δεν βρέθηκε μάθημα με αυτό το ID");
+            else{ System.out.println("Δεν βρέθηκε μάθημα με αυτό το ID");
+            System.exit(0);}
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

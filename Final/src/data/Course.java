@@ -108,6 +108,7 @@ public class Course
                 while (sch != 9);
             }else{
                 System.out.println("Δεν βρέθηκε μάθημα με αυτό το ID");
+                System.exit(0);
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

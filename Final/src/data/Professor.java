@@ -25,11 +25,6 @@ public class Professor extends Person
     }
 
     /**
-     * Default Constructor of a Professor Object
-     */
-    public Professor(){}
-
-    /**
      * Getter for PID
      * @return
      */

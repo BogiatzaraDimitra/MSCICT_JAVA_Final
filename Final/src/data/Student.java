@@ -324,7 +324,7 @@ public class Student extends Person
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:foititologio.db");
-            String insertQuery = "INSERT INTO StudentCourse (AM, ID) VALUES (?,?)";
+            String insertQuery = "INSERT INTO StudentCourse (AM, ID, Grade) VALUES (?,?,-1)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 
             preparedStatement.setString(1, am);
@@ -371,7 +371,8 @@ public class Student extends Person
                 id = resultSet1.getString("Name");
                 grad = resultSet.getInt("Grade");
                 System.out.printf("Course: " + id + "   ");
-                System.out.printf("Grade: " + grad);
+                if(grad != -1){
+                System.out.printf("Grade: " + grad);}
                 System.out.println("");
             }
             connection.close();
@@ -442,7 +443,7 @@ public class Student extends Person
             preparedStatement.setString(1, am);
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            if (resultSet != null) {
                 connection.close();
             }
             else {System.out.println("Ο φοιτητής δεν είναι εγγεγραμμένος στο μάθημα");
@@ -453,6 +454,11 @@ public class Student extends Person
 
         System.out.println("Βαθμός Φοιτητή για το μάθημα:");
         grad = Keyb.nextInt();
+        try {
+            checkgrade(grad);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Keyb.nextLine();
 
         try {
@@ -496,13 +502,26 @@ public class Student extends Person
             preparedStatement.setString(1, am);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                //if (resultSet != null){
                 grad = resultSet.getInt("Grade");
+                if (grad >= 5 ){
                 avg = avg + grad;
-                i = i+1;
+                i = i+1;}
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         System.out.println(" Ο μέσος όρος του φοιτητή με AM " + am + " είναι " + avg / i);
+    }
+
+    /**
+     * Checks if a numeric value is within range 0 - 10
+     * @param gr
+     * @throws Exception
+     */
+    public static void checkgrade(int gr) throws Exception{
+        if (gr < 0 || gr > 10) {
+            throw new Exception("Number is out of the range [0, 10]: " + gr);
+        }
     }
 }

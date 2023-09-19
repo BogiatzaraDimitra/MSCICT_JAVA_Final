@@ -231,8 +231,9 @@ public class Course
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 grad = resultSet.getInt("Grade");
+                if (grad != -1 ){
                 avg = avg + grad;
-                i++;
+                i++;}
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
